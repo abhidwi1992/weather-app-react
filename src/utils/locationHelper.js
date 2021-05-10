@@ -1,5 +1,5 @@
 export default async function getLocationInfo(latitude, longitude) {
-  const baseUrl = "http://api.openweathermap.org/geo/1.0/reverse";
+  const baseUrl = "https://api.openweathermap.org/geo/1.0/reverse";
   const apiKey = process.env.REACT_APP_MAPS_API_KEY;
   const limit = 1;
   const apiResults = await (
