@@ -20,6 +20,7 @@ function generateWeatherDataObject(apiResults, locationInfo) {
       weatherIcon: `http://openweathermap.org/img/w/${apiResults.current.weather[0].icon}.png`,
     },
     daily: [],
+    hourly: [],
   };
   apiResults.daily.forEach((day) => {
     weatherData.daily.push({
@@ -36,6 +37,21 @@ function generateWeatherDataObject(apiResults, locationInfo) {
       weatherIcon: `http://openweathermap.org/img/w/${day.weather[0].icon}.png`,
     });
   });
+  apiResults.hourly.forEach((hour, id) => {
+    if (id < 8) {
+      weatherData.hourly.push({
+        id: hour.dt,
+        date: new Date(hour.dt * 1000),
+        temp: hour.temp,
+        humidity: hour.humidity,
+        clouds: hour.clouds,
+        wind: hour.wind_speed,
+        weather: hour.weather[0].main,
+        weatherDesc: hour.weather[0].description,
+        weatherIcon: `http://openweathermap.org/img/w/${hour.weather[0].icon}.png`,
+      });
+    }
+  });
 
   return weatherData;
 }
@@ -46,14 +62,14 @@ export default async function requestWeatherData(latitude, longitude) {
   const units = "metric";
   const apiResults = await (
     await fetch(
-      `${baseUrl}?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly&units=${units}&appid=${apiKey}`
+      `${baseUrl}?lat=${latitude}&lon=${longitude}&exclude=minutely&units=${units}&appid=${apiKey}`
     )
   ).json();
 
   if (apiResults.cod) {
     throw new Error(`API call failed with error: ${apiResults.message}`);
   }
-  // console.log(apiResults);
+
   const locationInfo = await getLocationInfo(latitude, longitude);
   return generateWeatherDataObject(apiResults, locationInfo);
 }

@@ -34,11 +34,7 @@ export default function OverviewCard() {
 
   if (currentLocationData) {
     return (
-      <Card
-        variant="outlined"
-        className={classes.root}
-        onClick={() => setSelectedLocation(currentLocationData)}
-      >
+      <Card variant="outlined" className={classes.root}>
         <CardHeader
           avatar={
             <Avatar
@@ -51,7 +47,9 @@ export default function OverviewCard() {
             "MMMM Do, h:mm a"
           )}
         />
-        <CardActionArea>
+        <CardActionArea
+          onClick={() => setSelectedLocation(currentLocationData)}
+        >
           <CardContent className={classes.media} title="Hello">
             <Typography variant="h4" component="h3">
               <Box display="flex" alignItems="center">

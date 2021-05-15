@@ -11,7 +11,6 @@ export default function SelectedLocationProvider(props) {
 
   useEffect(() => {
     setSelectedLocation(currentLocationData);
-    console.log("effect");
   }, [currentLocationData]);
 
   return (

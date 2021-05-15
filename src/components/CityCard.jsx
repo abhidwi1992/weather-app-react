@@ -58,7 +58,7 @@ export default function CityCard(props) {
               className={classes.grid}
             >
               <Grid item xs={5} />
-              <Grid item xs={3} className={classes.gridCorner}>
+              <Grid item xs={4} className={classes.gridCorner}>
                 <Typography align="center" variant="body1" component="h3">
                   {moment(city.current.date)
                     .utc()

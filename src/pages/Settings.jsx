@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
   },
+  button: {
+    margin: "0.75rem",
+  },
 }));
 
 export default function Settings(props) {
@@ -120,8 +123,8 @@ export default function Settings(props) {
           <Grid
             item
             xs={12}
-            sm={6}
-            style={{ display: "flex", justifyContent: "flex-end" }}
+            sm={12}
+            style={{ display: "flex", justifyContent: "center" }}
           >
             {action !== "onBoard" && (
               <Button
@@ -130,12 +133,11 @@ export default function Settings(props) {
                 startIcon={<ClearOutlined />}
                 disableElevation
                 color="secondary"
+                className={classes.button}
               >
                 Cancel
               </Button>
             )}
-          </Grid>
-          <Grid item xs={12} sm={6}>
             <Button
               variant="contained"
               onClick={onSave}
@@ -143,6 +145,7 @@ export default function Settings(props) {
               disableElevation
               disabled={validateForm()}
               color="primary"
+              className={classes.button}
             >
               Save
             </Button>

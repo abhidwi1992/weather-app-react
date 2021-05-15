@@ -3,6 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import { useContext } from "react";
 import CityCard from "../components/CityCard";
 import ForecastCard from "../components/ForecastCard";
+import WeatherGraph from "../components/WeatherGraph";
 import { LocationContext } from "../context/LocationContext";
 import { SelectedLocationContext } from "../context/SelectedLocationContext";
 
@@ -47,10 +48,8 @@ export default function Dashboard() {
         <Typography paragraph variant="h6" component="h2">
           Weather Graph
         </Typography>
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel.
+        <Typography paragraph component="h2">
+          <WeatherGraph locationData={selectedLocation} />
         </Typography>
       </>
     );

@@ -11,7 +11,7 @@ export default async function getLocationInfo(latitude, longitude) {
   if (apiResults.cod) {
     throw new Error(`API call failed with error: ${apiResults.message}`);
   }
-  // console.log(apiResults);
+
   return {
     city: apiResults[0].name,
     country: apiResults[0].country,
