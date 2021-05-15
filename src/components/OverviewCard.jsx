@@ -11,6 +11,7 @@ import { yellow } from "@material-ui/core/colors";
 import { useContext } from "react";
 import moment from "moment";
 import { LocationContext } from "../context/LocationContext";
+import { SelectedLocationContext } from "../context/SelectedLocationContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,20 +29,27 @@ const useStyles = makeStyles((theme) => ({
 export default function OverviewCard() {
   const classes = useStyles();
 
-  const { weatherData } = useContext(LocationContext);
+  const { currentLocationData } = useContext(LocationContext);
+  const { setSelectedLocation } = useContext(SelectedLocationContext);
 
-  if (weatherData) {
+  if (currentLocationData) {
     return (
-      <Card variant="outlined" className={classes.root}>
+      <Card
+        variant="outlined"
+        className={classes.root}
+        onClick={() => setSelectedLocation(currentLocationData)}
+      >
         <CardHeader
           avatar={
             <Avatar
               className={classes.blue}
-              src={weatherData.current.weatherIcon}
+              src={currentLocationData.current.weatherIcon}
             />
           }
           title="Today"
-          subheader={moment(weatherData.current.date).format("MMMM Do, h:mm a")}
+          subheader={moment(currentLocationData.current.date).format(
+            "MMMM Do, h:mm a"
+          )}
         />
         <CardActionArea>
           <CardContent className={classes.media} title="Hello">
@@ -49,7 +57,7 @@ export default function OverviewCard() {
               <Box display="flex" alignItems="center">
                 <Box width="100%" mr={1} />
                 <Box width="100%" mr={1}>
-                  {Math.round(weatherData.current.temp)}&deg;C
+                  {Math.round(currentLocationData.current.temp)}&deg;C
                 </Box>
                 <Box width="100%" mr={1} />
               </Box>
@@ -58,7 +66,7 @@ export default function OverviewCard() {
               <Box display="flex" alignItems="center">
                 <Box width="10%" mr={1} />
                 <Box width="100%" mr={1}>
-                  {weatherData.city}
+                  {currentLocationData.city}
                 </Box>
                 <Box width="10%" mr={1} />
               </Box>
@@ -67,7 +75,7 @@ export default function OverviewCard() {
               <Box display="flex" alignItems="center">
                 <Box width="100%" mr={1} />
                 <Box width="100%" mr={1}>
-                  {weatherData.country}
+                  {currentLocationData.country}
                 </Box>
                 <Box width="100%" mr={1} />
               </Box>
@@ -75,7 +83,7 @@ export default function OverviewCard() {
           </CardContent>
           <CardContent>
             <Typography gutterBottom variant="h6" component="h3">
-              {weatherData.current.weather}
+              {currentLocationData.current.weather}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="div">
               Humidity:
@@ -83,20 +91,20 @@ export default function OverviewCard() {
                 <Box width="100%" mr={1}>
                   <LinearProgress
                     variant="determinate"
-                    value={weatherData.current.humidity}
+                    value={currentLocationData.current.humidity}
                   />
                 </Box>
-                {weatherData.current.humidity}%
+                {currentLocationData.current.humidity}%
               </Box>
               Cloudiness:
               <Box display="flex" alignItems="center">
                 <Box width="100%" mr={1}>
                   <LinearProgress
                     variant="determinate"
-                    value={weatherData.current.clouds}
+                    value={currentLocationData.current.clouds}
                   />
                 </Box>
-                {weatherData.current.clouds}%
+                {currentLocationData.current.clouds}%
               </Box>
             </Typography>
           </CardContent>

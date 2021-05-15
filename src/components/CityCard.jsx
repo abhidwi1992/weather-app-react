@@ -6,9 +6,9 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
-import { useState, useEffect } from "react";
 import moment from "moment";
-import requestWeatherData from "../utils/weatherDataHelper";
+import { useContext } from "react";
+import { SelectedLocationContext } from "../context/SelectedLocationContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     height: 140,
+  },
+  selected: {
+    fontWeight: "bold",
+    color: theme.palette.secondary.dark,
   },
   gridCorner: {
     backgroundColor: "rgba(255,255,255,0.8)",
@@ -34,33 +38,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CityCard(props) {
-  const { city } = props;
+  const { city, id, selected } = props;
+  const { setSelectedLocation } = useContext(SelectedLocationContext);
   const classes = useStyles();
-  const [cityData, setCityData] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const apiResults = await requestWeatherData(
-        city.latitude,
-        city.longitude
-      );
-      setCityData(apiResults);
-
-      console.log(apiResults);
-    };
-    fetchData();
-  }, [city.latitude, city.longitude]);
-
-  if (cityData) {
+  if (city) {
     return (
-      <Card className={classes.root}>
+      <Card className={classes.root} onClick={() => setSelectedLocation(city)}>
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image={`${process.env.PUBLIC_URL}/img${
-              Math.floor(Math.random() * 5) + 1
-            }.jpeg`}
-            title={cityData.city}
+            image={`${process.env.PUBLIC_URL}/img${id + 1}.jpeg`}
+            title={city.city}
           >
             <Grid
               container
@@ -71,23 +60,27 @@ export default function CityCard(props) {
               <Grid item xs={5} />
               <Grid item xs={3} className={classes.gridCorner}>
                 <Typography align="center" variant="body1" component="h3">
-                  {moment(cityData.current.date)
+                  {moment(city.current.date)
                     .utc()
-                    .utcOffset(cityData.timezoneOffset / 60)
+                    .utcOffset(city.timezoneOffset / 60)
                     .format("h:mm a")}
                 </Typography>
               </Grid>
               <Grid item xs={1} className={classes.gridAvatar}>
                 <Avatar
-                  src={cityData.current.weatherIcon}
+                  src={city.current.weatherIcon}
                   className={classes.avatarSmall}
                 />
               </Grid>
             </Grid>
           </CardMedia>
           <CardContent>
-            <Typography variant="body1" component="h3">
-              {cityData.city}
+            <Typography
+              variant="body1"
+              component="h3"
+              className={selected ? classes.selected : null}
+            >
+              {city.city}
             </Typography>
           </CardContent>
         </CardActionArea>

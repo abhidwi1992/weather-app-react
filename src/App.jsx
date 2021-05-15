@@ -44,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     background: "rgb(1,1,1)",
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer * 2,
+    color: "#fff",
+  },
   menuButton: {
     marginRight: theme.spacing(2),
     [theme.breakpoints.up("sm")]: {
@@ -133,6 +137,9 @@ function App(props) {
   };
   const handleMenuClick = (menuItem) => {
     setPage(menuItem);
+    if (mobileOpen) {
+      setMobileOpen(!mobileOpen);
+    }
   };
 
   const drawer = (

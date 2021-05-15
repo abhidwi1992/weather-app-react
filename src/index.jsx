@@ -4,12 +4,15 @@ import "./index.css";
 import UserProvider from "./context/UserContext";
 import App from "./App";
 import LocationProvider from "./context/LocationContext";
+import SelectedLocationProvider from "./context/SelectedLocationContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <UserProvider>
       <LocationProvider>
-        <App />
+        <SelectedLocationProvider>
+          <App />
+        </SelectedLocationProvider>
       </LocationProvider>
     </UserProvider>
   </React.StrictMode>,
